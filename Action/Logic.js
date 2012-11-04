@@ -2,7 +2,7 @@ var WebApp = (function() {
 	var _def, _headView, _head, _header,
 		_webapp, _group, _bdo, _bdy, _file,
 		_maxw, _maxh,
-		_scrID, _scrolling, _scrAmount,
+		_scrID, _scrolling, _scrAmount, _custScroll,
 		_opener, _radio,
 
 		_prev		= -1,	// for beginslide/endslide event (SlideInfo)
@@ -169,6 +169,8 @@ var WebApp = (function() {
 			}
 			return (_hold = 0);
 		},
+
+		SetScroll: function(value) { _custScroll = value; },
 
 		Form: function(frm, focus) {
 			var s, a, b, c, o, k, f, t, i;
@@ -1262,6 +1264,9 @@ var WebApp = (function() {
 	}
 
 	function AdjustView(to) {
+		to = typeof _custScroll == "number" ? _custScroll : to;
+		_custScroll = undefined;
+
 		var h = to ? to : Math.min(50, WIN().y);
 		var s = to ? Math.max(1, to - 50) : 1;
 		var d = to ? -1 : +1;
