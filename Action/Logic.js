@@ -2,7 +2,7 @@ var WebApp = (function() {
 	var _def, _headView, _head, _header,
 		_webapp, _group, _bdo, _bdy, _file,
 		_maxw, _maxh,
-		_scrID, _scrolling, _scrAmount, _custScroll,
+		_scrID, _scrolling, _scrAmount,
 		_opener, _radio,
 
 		_prev		= -1,	// for beginslide/endslide event (SlideInfo)
