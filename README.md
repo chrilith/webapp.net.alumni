@@ -1,6 +1,6 @@
-WebApp.Net Alumni -- http://webapp-net.com/
-Copyright (c) 2008-2012, Chris Apers (Chrilith)
-All rights reserved.
+WebApp.Net Alumni -- http://webapp-net.com/  
+Copyright (c) 2008-2012, Chris Apers (Chrilith)  
+All rights reserved.  
 
 A web application micro-framework for iPhone and iPod touch, webOS, Android and
 any other WebKit based browser.
@@ -9,11 +9,11 @@ WebApp.Net can be used with any server side technology (.NET, PHP, ...).
 
 A full features and changes list is available on the website.
 
-Site     http://webapp-net.com/
-Doc      http://webapp-net.com/Doc/
-Forums   http://webapp-net.com/Forums/
-License  http://webapp-net.com/license.php
-Demo     http://demo.webapp-net.com/
+Site     http://webapp-net.com/  
+Doc      http://webapp-net.com/Doc/  
+Forums   http://webapp-net.com/Forums/  
+License  http://webapp-net.com/license.php  
+Demo     http://demo.webapp-net.com/  
 
 Source   https://github.com/chrilith/webapp.net.alumni
 
