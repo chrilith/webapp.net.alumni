@@ -888,6 +888,7 @@ var WebApp = (function() {
 		if (li && HasClass(li, "iRadio")) {
 			AddClass(li, "__sel");
 			ShowRadio(li);
+			_lastScroll = WIN().y;
 			_hold = location.href;
 			SlideTo("wa__radio");
 			return NoEvent(e);
