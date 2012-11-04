@@ -33,7 +33,7 @@ a[rel=back] { display:none }
 
 #WebApp { min-height:100%; width:100% }
 #iGroup { position:relative }
-.iLayer { width:100%; position:absolute; top:0; display:none }
+.iLayer { width:100%; position:absolute; top:0; display:none; -webkit-backface-visibility: hidden }
 
 .iItem { display:none }
 #__wa_media { display:none; width:0; height:0 }
