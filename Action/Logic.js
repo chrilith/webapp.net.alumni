@@ -72,7 +72,7 @@ var WebApp = (function() {
 	d.webapp = d.wa;
 
 	var $pc = {
-		get Version() { return 'v0.5.2' },
+		get Version() { return 'v0.5.3' },
 
 		Proxy: function(url) { _proxy = url },
 
