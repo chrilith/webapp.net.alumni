@@ -456,7 +456,7 @@ var WebApp = (function() {
 	[4] = frame index
 	[5] = end part of the filename
 */
-		if (u = getComputedStyle(o).backgroundImage) {
+		if ((u = getComputedStyle(o, null).backgroundImage)) {
 			o._ = 1;	// To track if loading animation is still active
 			return /(.+?(\d+)x(\d+)x)(\d+)(.*)/.exec(u);
 		}
