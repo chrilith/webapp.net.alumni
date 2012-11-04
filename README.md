@@ -1,4 +1,4 @@
-WebApp.Net -- http://webapp-net.com/
+WebApp.Net Alumni -- http://webapp-net.com/
 Copyright (c) 2008-2012, Chris Apers (Chrilith)
 All rights reserved.
 
@@ -12,8 +12,10 @@ A full features and changes list is available on the website.
 Site     http://webapp-net.com/
 Doc      http://webapp-net.com/Doc/
 Forums   http://webapp-net.com/Forums/
-License: http://webapp-net.com/license.php
+License  http://webapp-net.com/license.php
 Demo     http://demo.webapp-net.com/
+
+Source   https://github.com/chrilith/webapp.net.alumni
 
 Contact  chrilith@gmail.com
 
