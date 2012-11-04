@@ -56,10 +56,22 @@
 *[dir=rtl] #waBackButton:active { -webkit-border-image: url(Img/rtl-button-back-touch.png) 0 15 0 10 }
 *[dir=rtl] #waBackButton {
 	border-width:0 15px 0 10px;
+
 	-webkit-border-image: url(Img/rtl-button-back.png) 0 15	 0 10;
+	-moz-border-image:url(Img/rtl-button-back.png) 0 15 0 10;
+	border-image:url(Img/rtl-button-back.png) 0 15 0 10 fill;
+
 	-webkit-border-radius:4px;
 	-webkit-border-top-right-radius:22px;
 	-webkit-border-bottom-right-radius:22px;
+
+	-moz-border-radius:4px;
+	-moz-border-radius-topright:22px;
+	-moz-border-radius-bottomright:22px;
+
+	border-radius:4px;
+	border-top-right-radius:22px;
+	border-bottom-right-radius:22px;
 }
 
 *[dir=rtl] #waHomeButton,
@@ -96,9 +108,21 @@
 *[dir=rtl] .iList .iShop li:not(.iMore) a { padding-left:31px; padding-right:inherit }
 
 *[dir=rtl] .iMenu .iShop li img.iFull { margin:-11px -8px -12px 6px }
-*[dir=rtl] .iMenu .iShop li img.iFull { -webkit-border-radius:0 }
-*[dir=rtl] .iMenu .iShop li:first-child img.iFull { -webkit-border-top-right-radius:9px }
-*[dir=rtl] .iMenu .iShop li:last-child img.iFull { -webkit-border-bottom-right-radius:9px }
+*[dir=rtl] .iMenu .iShop li img.iFull {
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	border-radius:0;
+}
+*[dir=rtl] .iMenu .iShop li:first-child img.iFull {
+	-webkit-border-top-right-radius:9px;
+	-moz-border-radius-topright:9px;
+	border-top-right-radius:9px;
+}
+*[dir=rtl] .iMenu .iShop li:last-child img.iFull {
+	-webkit-border-bottom-right-radius:9px;
+	-moz-border-radius-bottomright:9px;
+	border-bottom-right-radius:9px;
+}
 
 *[dir=rtl] .iMenu li a.iButton {
 	float:left;
