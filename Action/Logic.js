@@ -1,31 +1,31 @@
 var WebApp = (function() {
-	var _def, _headView, _head, _header;
-	var _webapp, _group, _bdo, _bdy, _file;
-	var _maxw, _maxh;
-	var _scrID, _scrolling, _scrAmount;
-	var _opener, _radio;
+	var _def, _headView, _head, _header,
+		_webapp, _group, _bdo, _bdy, _file,
+		_maxw, _maxh,
+		_scrID, _scrolling, _scrAmount, _custScroll,
+		_opener, _radio,
 
-	var _prev		= -1;	// for beginslide/endslide event (SlideInfo)
-	var _historyPos	= -1;	// warning: must order properly var names for reduction script
-	var _history	= [];
-	var _loader		= [];
-	var _fading		= [];
-	var _ajax		= [];
-	var _initialNav	= history.length;
-	var _sliding	= 0;
-	var _hold		= 0;
-	var _baseTitle	= "";
-	var _baseBack	= "";
-	var _width		= 0;
-	var _height		= 0;
-	var _lastScroll	= 1;
-	var _dialog		= null;
-	var _scrolled	= 1;
-	var _proxy		= "";
-	var _pil		= 0;
-	var _tmp		= setInterval(InitBlocks, 250);
-	var _locker		= null;
-	var _win		= window;
+		_prev		= -1,	// for beginslide/endslide event (SlideInfo)
+		_historyPos	= -1,	// warning: must order properly var names for reduction script
+		_history	= [],
+		_loader		= [],
+		_fading		= [],
+		_ajax		= [],
+		_initialNav	= history.length,
+		_sliding	= 0,
+		_hold		= 0,
+		_baseTitle	= "",
+		_baseBack	= "",
+		_width		= 0,
+		_height		= 0,
+		_lastScroll	= 1,
+		_dialog		= null,
+		_scrolled	= 1,
+		_proxy		= "",
+		_pil		= 0,
+		_tmp		= setInterval(InitBlocks, 250),
+		_locker		= null,
+		_win		= window;
 	
 	// RFC 2397 (http://www.scalora.org/projects/uriencoder/)
 	var _blank		= "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==";
