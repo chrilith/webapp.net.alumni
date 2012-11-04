@@ -51,6 +51,22 @@ var WebApp = (function() {
 
 	var d = document;
 	var $h = {
+		HEAD:0,
+		BACK:1,
+		HOME:2,
+		LEFT:3,
+		RIGHT:4,
+		TITLE:5
+	};
+	var $d = {
+		L2R:+1,
+		R2L:-1
+	};
+	d.wa = {
+		header:$h,
+		direction:$d
+	};
+/*	var $h = {
 		get HEAD() { return 0 },
 		get BACK() { return 1 },
 		get HOME() { return 2 },
@@ -69,17 +85,19 @@ var WebApp = (function() {
 		get header() { return $h },
 		get direction() { return $d }
 	};
+*/
 	d.webapp = d.wa;
 
 	var $pc = {
-		get Version() { return 'v0.5.3' },
+//		get Version() { return 'v0.5.3' },
+		Version: "0.5.3",
 
-		Proxy: function(url) { _proxy = url },
+		Proxy: function(url) { _proxy = url; },
 
-		Progressive: function(enable) { _pil = enable },	// TODO: xml based selection + parent stack
+		Progressive: function(enable) { _pil = enable; },	// TODO: xml based selection + parent stack
 
 		Opener: function(func) {
-			_opener = func ? func : function(u) { location = u };
+			_opener = func ? func : function(u) { location = u; };
 		},
 
 		Refresh: function(id) {
@@ -131,20 +149,18 @@ var WebApp = (function() {
 		},
 
 		AddEventListener: function(evt, handler) {
-			if (IsDefined(_handler[evt])) {
-				with (_handler[evt]) {
-					if (indexOf(handler) == -1) {
-						push(handler);
-					}
+			var h = _handler[evt];
+			if (IsDefined(h)) {
+				if (h.indexOf(handler) == -1) {
+					h.push(handler);
 				}
 			}
 		},
 
 		RemoveEventListener: function(evt, handler) {
-			if (IsDefined(_handler[evt])) {
-				with (_handler[evt]) {
-					splice(lastIndexOf(handler), 1);
-				}
+			var h = _handler[evt];
+			if (IsDefined(h)) {
+				h.splice(h.lastIndexOf(handler), 1);
 			}
 		},
 
@@ -169,20 +185,19 @@ var WebApp = (function() {
 			}
 			return (_hold = 0);
 		},
-
+		
 		SetScroll: function(value) { _custScroll = value; },
 
 		Form: function(frm, focus) {
-			var s, a, b, c, o, k, f, t, i;
+			var s, a, b, c, o, k, f, t, i, h;
 
 			a = $(frm);
 			b = $(_history[_historyPos][0]);
 			s = (a.style.display != "block");
 
 			f = GetForm(a);
-			with (_header[$h.HEAD]) {
-				t = offsetTop + offsetHeight;
-			}
+			h = _header[$h.HEAD];
+			t = h.offsetTop + h.offsetHeight;
 
 			// WARNING: this variable (k?) must not be changed, else onsumbit will not point to the function anymore!
 			if (s) { a.style.top = t + "px"; }
@@ -208,7 +223,7 @@ var WebApp = (function() {
 			SetTitle(s && o ? o.innerHTML : null);
 
 			_dialog = (s) ? a : null;
-			if (s) { c = a; a = b; b = c }
+			if (s) { c = a; a = b; b = c; }
 
 			DelLayerButtons(a);
 			AddLayerButtons(b, s);
@@ -237,14 +252,12 @@ var WebApp = (function() {
 						}
 					}
 					return q;
-				}
+				};
 
 				var q  = _($$("input", f),
 					function(i) {
-						with(i) {
-							return ((Contains(type, ["text", "password", "hidden", "search"]) ||
-									(Contains(type, ["radio", "checkbox"]) && checked)))
-						}
+						return ((Contains(i.type, ["text", "password", "hidden", "search"]) ||
+								(Contains(i.type, ["radio", "checkbox"]) && i.checked)));
 					});
 					q += _($$("select", f));
 					q += _($$("textarea", f));
@@ -293,7 +306,7 @@ var WebApp = (function() {
 				cb = cb == -1 ? DefaultCallback() : cb;
 	
 				var o = new XMLHttpRequest();
-				var c = function() { __callback(o, cb, loader) };
+				var c = function() { __callback(o, cb, loader); };
 				var m = prms ? "POST" : "GET";
 	
 				async = !!async;
@@ -319,7 +332,7 @@ var WebApp = (function() {
 		Loader: function(obj, show) {
 			var o, h, f;
 
-			if (o = $(obj)) {
+			if ((o = $(obj))) {
 				h = HasClass(o, "__lod");
 				ApplyMore(o);
 	
@@ -331,9 +344,9 @@ var WebApp = (function() {
 	
 				} else if (h) {
 					DelClass(o, "__lod");
-					f = _loader.filter(function(f) { return f[0] == o })[0];
+					f = _loader.filter(function(f) { return f[0] == o; })[0];
 					Remove(_loader, f);
-					if (f = f[1]) {
+					if ((f = f[1])) {
 						f[0]._ = 0;
 						clearInterval(f[1]);
 						f[0].style.backgroundImage = "";
@@ -363,7 +376,7 @@ var WebApp = (function() {
 		},
 
 		toString: function() { return "[WebApp.Net Framework]"; }
-	}
+	};
 
 	function ToTop(h) {
 		h = h ? h : 0;
@@ -399,13 +412,11 @@ var WebApp = (function() {
 				}
 			}
 
-			with ($h) {
-				if (!Contains(BACK, k)) {
-					Display(h[BACK], s && !h[LEFT] && _historyPos);
-				}
-				if (!Contains(HOME, k)) {
-					Display(h[HOME], s && !h[RIGHT] && !_hold && _historyPos > 1);
-				}
+			if (!Contains($h.BACK, k)) {
+				Display(h[$h.BACK], s && !h[$h.LEFT] && _historyPos);
+			}
+			if (!Contains($h.HOME, k)) {
+				Display(h[$h.HOME], s && !h[$h.RIGHT] && !_hold && _historyPos > 1);
 			}
 		}
 	}
@@ -432,20 +443,18 @@ var WebApp = (function() {
 
 	function DelLayerButtons(lay) {
 		if (_head) { 
-			with ($h) {
-				for (var i = LEFT; i <= RIGHT; i++) {
-					var a = _header[i];
-					if (a && (	HasToken(a.rel, "action") ||
-								HasToken(a.rel, "back")) ) {
-		
-						Display(a, 0);
-						DelClass(a, i == RIGHT ? "iRightButton" : "iLeftButton");
-						lay.insertBefore(a, lay.firstChild);
-					}
+			for (var i = $h.LEFT; i <= $h.RIGHT; i++) {
+				var a = _header[i];
+				if (a && (	HasToken(a.rel, "action") ||
+							HasToken(a.rel, "back")) ) {
+	
+					Display(a, 0);
+					DelClass(a, i == $h.RIGHT ? "iRightButton" : "iLeftButton");
+					lay.insertBefore(a, lay.firstChild);
 				}
-				_header[RIGHT] = $("waRightButton");
-				_header[LEFT] = $("waLeftButton");
 			}
+			_header[$h.RIGHT] = $("waRightButton");
+			_header[$h.LEFT] = $("waLeftButton");
 		}
 	}
 
@@ -458,9 +467,9 @@ var WebApp = (function() {
 	[4] = frame index
 	[5] = end part of the filename
 */
-		if ((u = getComputedStyle(o, null).backgroundImage)) {
+		if ((u = window.getComputedStyle(o, null).backgroundImage)) {
 			o._ = 1;	// To track if loading animation is still active
-			return /(.+?(\d+)x(\d+)x)(\d+)(.*)/.exec(u);
+			return (/(.+?(\d+)x(\d+)x)(\d+)(.*)/).exec(u);
 		}
 	}
 
@@ -472,7 +481,7 @@ var WebApp = (function() {
 			c = $$("*", o);
 			for (i = 0; i < c.length; i++) {
 				o = c[i];
-				if (d = AnimData(o)) {
+				if ((d = AnimData(o))) {
 					break;
 				}
 			}
@@ -483,20 +492,25 @@ var WebApp = (function() {
 
 	function AnimRun(a) {
 		if (!a[5]) {
-			a[1] = parseInt(a[1]) % parseInt(a[2]) + 1;
+			a[1] = a[1] % a[2] + 1;
 			var b = a[3].replace("*", a[1]);
-			a[4].onload = function() { if (a[0]._) a[0].style.backgroundImage = b; a[5] = 0 };
+			a[4].onload = function() {
+				if (a[0]._) {
+					a[0].style.backgroundImage = b;
+					a[5] = 0;
+				}
+			};
 			a[5] = a[4].src = b.substr(4, b.length - 5);
 		}
 	}
 
 /* Private */
+	function IsDefined(o) { return (typeof o != "undefined"); }
 	function NoTag(s) { return s.replace(/<.+?>/g, "").replace(/^\s+|\s+$/g, "").replace(/\s{2,}/, " "); }
 	function NoEvent(e) { e.preventDefault(); e.stopPropagation(); }
 	function IsAsync(o) { return HasToken(o.rev, "async") || HasToken(o.rev, "async:np"); }
-	function IsMedia(o) { return HasToken(o.rev, "media") /*|| HasToken(o.rev, "media:audio") || HasToken(o.rev, "media:video");*/ }
-	function IsDefined(o) { return (typeof o != "undefined"); }
-	function Contains(o, a) { return a.indexOf(o) != -1 }
+	function IsMedia(o) { return HasToken(o.rev, "media"); /*|| HasToken(o.rev, "media:audio") || HasToken(o.rev, "media:video");*/ }
+	function Contains(o, a) { return (a.indexOf(o) != -1); }
 
 	function $(i) { return typeof i == "string" ? document.getElementById(i) : i; }
 	function $$(t, o) { return (o || document).getElementsByTagName(t); }
@@ -516,7 +530,12 @@ var WebApp = (function() {
 	}
 	
 	function WIN() {
-		with (_win) return { x:pageXOffset, y:pageYOffset, w:innerWidth, h:innerHeight };
+		return {
+			x: _win.pageXOffset,
+			y: _win.pageYOffset,
+			w: _win.innerWidth,
+			h: _win.innerHeight
+		};
 	}
 
 	function NewScript(c) {
@@ -548,8 +567,8 @@ var WebApp = (function() {
 		}
 		return o;
 	}
-	function GetLink(o)		{ return GetName(o) == "a" ? o : GetParent(o, "a") }
-	function GetName(o)		{ return o.localName.toLowerCase() }
+	function GetLink(o)		{ return GetName(o) == "a" ? o : GetParent(o, "a"); }
+	function GetName(o)		{ return o.localName.toLowerCase(); }
 	function HasToken(o, t)	{ return o && Contains(t, o.toLowerCase().split(" ")); }
 
 	function HasClass(o, c)	{ return o && Contains(c, GetClass(o)); }
@@ -568,11 +587,11 @@ var WebApp = (function() {
 		o.className = c.join(" ");
 	}
 	function GetParent(o, t) {
-		while ((o = o.parentNode) && (o.nodeType != 1 || GetName(o) != t)){};
+		while ((o = o.parentNode) && (o.nodeType != 1 || GetName(o) != t)){}
 		return o;
 	}
 	function AnyOf(o, c) {
-		while ((o = o.parentNode) && (o.nodeType != 1 || !HasClass(o, c))){};
+		while ((o = o.parentNode) && (o.nodeType != 1 || !HasClass(o, c))){}
 		return o;
 	}
 
@@ -616,9 +635,13 @@ var WebApp = (function() {
 		_wkt = IsDefined(_bdy.style.webkitTransform);		
 	}
 
-	function Display(o, s) { if (o = $(o)) { o.style.display = s ? "block" : "none"; } }
+	function Display(o, s) {
+		if ((o = $(o))) {
+			o.style.display = s ? "block" : "none";
+		}
+	}
 	function Layer(o, s) {
-		if (o = $(o)) {
+		if ((o = $(o))) {
 			o.style[_bdo == 1 ? "left" : "right"] = s ? 0 : "";
 			o.style.display = s ? "block" : "";
 		}
@@ -626,10 +649,10 @@ var WebApp = (function() {
 
 	// TODO: any way to do this with CSS??
 	function AdjustLayer(o) {
-		if (o = o || GetActive()) {
+		if ((o = o || GetActive())) {
 			var z = $$("div", o); z = z[z.length -1];
 			if (z && (HasClass(z, "iList") || HasClass(z, "iFull"))) {
-				z.style.minHeight = parseInt(_webapp.style.minHeight) - XY(z).y + "px";
+				z.style.minHeight = (_webapp.style.minHeight | 0) - XY(z).y + "px";
 			}
 		}
 	}
@@ -645,7 +668,6 @@ var WebApp = (function() {
 	function Historize(o, l) {	// l = isDefault
 		if (o) {
 			//TODO: fix endless toggle when using same layer in different level of navigation
-			
 			_history.splice(++_historyPos, _history.length);
 			_history.push([o, !l ? location.hash : ("#_" + _def.substr(2)), _lastScroll]);
 
@@ -691,12 +713,12 @@ var WebApp = (function() {
 		return bs[2] + rs;
 	}
 
-	function IsMobile() {
-		return (UA("iPhone") || UA("iPod") || UA("Aspen"));
-	}
-
 	function UA(s) {
 		return Contains(s, navigator.userAgent);
+	}
+
+	function IsMobile() {
+		return (UA("iPhone") || UA("iPod") || UA("Aspen"));
 	}
 
 	function Resizer() {
@@ -710,7 +732,7 @@ var WebApp = (function() {
 			CallListeners("orientationchange");
 		}
 
-		if (o = GetActive()) {
+		if ((o = GetActive())) {
 			h = XY(o).y + o.offsetHeight;
 		}
 
@@ -745,7 +767,7 @@ var WebApp = (function() {
 			var i, pos = -1;
 			for (i in _history) {
 				if (_history[i][0] == act) {
-					pos = parseInt(i);
+					pos = (i | 0);
 					break;
 				}
 			}
@@ -763,7 +785,7 @@ var WebApp = (function() {
 	function CallListeners(evt, ctx, obj) {
 		// Do not waste time and memory if no handler have been defined for the given event
 		var l = _handler[evt].length;
-		if (l == 0) {
+		if (l === 0) {
 			return true;
 		}
 		var e = {
@@ -772,11 +794,11 @@ var WebApp = (function() {
 			context: ctx || Explode(_history[_historyPos][1]),
 			windowWidth: _width,
 			windowHeight: _height 
-		}
+		};
 
 		var k = true;
 		for (var i = 0; i < l; i++) {
-			k = k && (_handler[evt][i](e) == false ? false : true);
+			k = k && (_handler[evt][i](e) === false ? false : true);
 		}
 		return k;
 	}
@@ -815,18 +837,16 @@ var WebApp = (function() {
 		Layer(a, 1);
 		AddLayerButtons($(a));
 
-		with ($h) {
-			var h = _header;
-			Display(h[BACK], (!h[LEFT] && _historyPos));
-			Display(h[HOME], (!h[RIGHT] && _historyPos > 1 && a != _def));
-	
-			if (h[BACK]) {
-				_baseBack = h[BACK].innerHTML;
-			}
-			if (h[TITLE]) {
-				_baseTitle = h[TITLE].innerHTML;
-				SetTitle();
-			}
+		var h = _header;
+		Display(h[$h.BACK], (!h[$h.LEFT] && _historyPos));
+		Display(h[$h.HOME], (!h[$h.RIGHT] && _historyPos > 1 && a != _def));
+
+		if (h[$h.BACK]) {
+			_baseBack = h[$h.BACK].innerHTML;
+		}
+		if (h[$h.TITLE]) {
+			_baseTitle = h[$h.TITLE].innerHTML;
+			SetTitle();
 		}
 
 		/*	start common jobs
@@ -867,7 +887,7 @@ var WebApp = (function() {
 	}
 
 	function ClearTransform(o) {
-		if (o) o.style.webkitTransform = "";
+		if (o) { o.style.webkitTransform = ""; }
 	}
 
 	function ListenClick(e) {
@@ -875,10 +895,12 @@ var WebApp = (function() {
 			return NoEvent(e);
 		}
 		/* Checkbox label */
-		var o = e.target;
-		var n = GetName(o);
+		var f,
+			o = e.target,
+			n = GetName(o);
+
 		if (n == "label") {
-			var f = $($A(o, "for"));
+			f = $($A(o, "for"));
 			if (HasClass(f, "iToggle")) {
 				setTimeout(FlipCheck, 1, f.previousSibling, 1);
 			}
@@ -908,7 +930,7 @@ var WebApp = (function() {
 			var old = a.onclick;
 			a.onclick = null;			// prevent double execution
 			var val = old.call(a, e);
-			setTimeout(function() { a.onclick = old }, 0);
+			setTimeout(function() { a.onclick = old; }, 0);
 			if (val === false) {
 				if (li) {
 					AddClass(li, HasClass(a, "iSide") ? "__tap" : "__sel");
@@ -939,7 +961,7 @@ var WebApp = (function() {
 					Display(ShowAsync(o)[0], 1);
 					ShowTab(ul, li, 0, 1);
 				});
-			} else { h = t }				// activation only if loader doesn't exists or disabled (!ax)
+			} else { h = t; }				// activation only if loader doesn't exists or disabled (!ax)
 			ShowTab(ul, li, !!h, !ax);		// !ax = event will be raised by async callback
 
 			if (!t) { return NoEvent(e); }	// will be processed as classic link
@@ -996,8 +1018,7 @@ var WebApp = (function() {
 				return NoEvent(e);
 			}
 			if (HasToken(a.rel, "action")) {
-				var f = GetForm(_dialog);
-				if (f) {
+				if ((f = GetForm(_dialog))) {
 					f.onsubmit(e);
 					return;
 				}
@@ -1033,7 +1054,7 @@ var WebApp = (function() {
 	function startsWith(s1) {
 		var r, i, a = arguments;
 		for (i = 1; i < a.length; i++) {
-			if (s1.toLowerCase().indexOf(a[i]) == 0) {
+			if (s1.toLowerCase().indexOf(a[i]) === 0) {
 				return 1;
 			}
 		}
@@ -1072,7 +1093,7 @@ var WebApp = (function() {
 		if (dir == $d.R2L) {
 			Historize(dst.id);
 		} else {
-			while (_historyPos && _history[--_historyPos][0] != dst.id){};
+			while (_historyPos && _history[--_historyPos][0] != dst.id){}
 		}
 
 // New title bar
@@ -1217,7 +1238,7 @@ var WebApp = (function() {
 
 	function SetTitle(title) {
 		var o;
-		if (o = _header[$h.TITLE]) {
+		if ((o = _header[$h.TITLE])) {
 			o.innerHTML = title || GetTitle(GetActive()) || _baseTitle;
 		}
 	}
@@ -1245,21 +1266,20 @@ var WebApp = (function() {
 		(i.disabled ? AddClass : DelClass)(c, "__dis");
 
 		o = c.firstChild.nextSibling;
-		with (c.lastChild) {
-			innerHTML = txt[i.checked ? 0 : 1];
-			if (i.checked) {
-				o.style.left = "";
-				o.style.right = "-1px";
-				AddClass(c, "__sel");
-				style.left = 0;
-				style.right = "";
-			} else {
-				o.style.left = "-1px";
-				o.style.right = "";
-				DelClass(c, "__sel");
-				style.left = "";
-				style.right = 0;
-			}
+		var l = c.lastChild;
+		l.innerHTML = txt[i.checked ? 0 : 1];
+		if (i.checked) {
+			o.style.left = "";
+			o.style.right = "-1px";
+			AddClass(c, "__sel");
+			l.style.left = 0;
+			l.style.right = "";
+		} else {
+			o.style.left = "-1px";
+			o.style.right = "";
+			DelClass(c, "__sel");
+			l.style.left = "";
+			l.style.right = 0;
 		}
 	}
 
@@ -1267,9 +1287,9 @@ var WebApp = (function() {
 		to = typeof _custScroll == "number" ? _custScroll : to;
 		_custScroll = undefined;
 
-		var h = to ? to : Math.min(50, WIN().y);
-		var s = to ? Math.max(1, to - 50) : 1;
-		var d = to ? -1 : +1;
+		var h = to ? to : Math.min(50, WIN().y),
+			s = to ? Math.max(1, to - 50) : 1,
+			d = to ? -1 : +1;
 
 		while (s <= h) {
 			var z = CalcEaseOut(s, h, d, 6, 2);
@@ -1281,12 +1301,12 @@ var WebApp = (function() {
 	function Explode(loc) {
 		// WARNING: with classic anchors the returned value of this function will be wrong
 		if (loc) {
-			var p = loc.indexOf("#_");
+			var i, p = loc.indexOf("#_");
 			
 			if (p != -1) {
 				loc = loc.substring(p + 2).split("/");
 				var id = "wa" + loc[0];
-				for (var i in loc) {
+				for (i = 0; i < loc.length; i++) {
 					loc[i] = decodeURIComponent(loc[i]);
 				}
 				loc[0] = id;
@@ -1331,8 +1351,7 @@ var WebApp = (function() {
 
 	function SetURL(url) {
 		var d = url.match(/[a-z]+:\/\/(.+:.*@)?([a-z0-9-\.]+)((:\d+)?\/.*)?/i);
-		return (!_proxy || !d || d[2] == location.hostname)
-			? url : AddParam(_proxy, "__url", url);	// FIXME??? was __url=?
+		return (!_proxy || !d || d[2] == location.hostname) ? url : AddParam(_proxy, "__url", url);	// FIXME??? was __url=?
 	}
 
 	function SplitURL(u) {
@@ -1353,7 +1372,7 @@ var WebApp = (function() {
 	function AddParam(u, k, v) {
 		u = SplitURL(u);
 		var q = u[1].filter(
-				function(o) { return o && o.indexOf(k + "=") != 0 });	// != 0 => any parameter not starting with (k + "=") no multiple name allowed!!! FIXME?
+				function(o) { return (o && o.indexOf(k + "=") !== 0); });	// != 0 => any parameter not starting with (k + "=") no multiple name allowed!!! FIXME?
 		q.push(k + "=" + encodeURIComponent(v));
 		return u[0] + "?" + q.join("&") + u[2];
 	}
@@ -1418,7 +1437,7 @@ var WebApp = (function() {
 			if (p && i == _history[0][0]) {
 				_history[1][2] = 0;
 			}
-			while (p && _history[--p][0] != i){};
+			while (p && _history[--p][0] != i){}
 			if (p) { _history[p + 1][2] = 0; }
 		}
 	}
@@ -1435,7 +1454,7 @@ var WebApp = (function() {
 
 			/* get all parts to update */
 			var f, p = $$("part", o);
-			if (p.length == 0) { p = [o]; }
+			if (p.length === 0) { p = [o]; }
 
 			for (var z = 0; z < p.length; z++) {
 				var dst = $$("destination", p[z])[0];
@@ -1472,7 +1491,7 @@ var WebApp = (function() {
 			/* Custom title for the given layer */
 			t = $$("title", o);
 			for (var n = 0; n < t.length; n++) {
-				var s = $($A(t[n], "set"));
+				s = $($A(t[n], "set"));
 				s.title = ReadTextNodes(t[n]);
 				if (a == s) { SetTitle(); }
 			}
@@ -1536,12 +1555,12 @@ var WebApp = (function() {
 		}
 		var er, ld, ob;
 
-		if (ob = _ajax.filter(function(a) { return o == a[0] })[0]) {
+		if ((ob = _ajax.filter(function(a) { return o == a[0]; })[0])) {
 			CallListeners("endasync", ob.pop(), ob[0]);
 			Remove(_ajax, ob);
 		}
 
-		er = (o.status != 200 && o.status != 0); // 0 for file based requests
+		er = (o.status != 200 && o.status !== 0); // 0 for file:// based requests
 		try { if (cb) { ld = cb(o, lr, DefaultCallback()); } } 
 		catch (ex) { er = ex; console.error(er); }
 
@@ -1581,15 +1600,13 @@ var WebApp = (function() {
 
 	function UpdateRadio(r, p) {
 		for (var j = 0; j < r.length; j++) {
-			with (r[j])	{
-				if  (type == "radio" &&
-					(checked || getAttribute("checked"))) {	// Safari bug, have to use getAttribute and set checked state from async content
+			if  (r[j].type == "radio" &&
+				(r[j].checked || r[j].getAttribute("checked"))) {	// Safari bug, have to use getAttribute and set checked state from async content
 
-					checked = true;
-					p = $$("span", p || GetParent(r[j], "li"))[0];
-					p.innerHTML = GetText(parentNode);
-					break;
-				}
+				r[j].checked = true;
+				p = $$("span", p || GetParent(r[j], "li"))[0];
+				p.innerHTML = GetText(r[j].parentNode);
+				break;
 			}
 		}
 	}
@@ -1687,6 +1704,7 @@ var WebApp = (function() {
 
 	function InitCheck(p) {
 		var o = $$("input", p);
+		var h = function() { FlipCheck(this); };
 
 		for (var i = 0; i < o.length; i++) {
 			if (o[i].type == "checkbox" && HasClass(o[i], "iToggle") && !HasClass(o[i], "__done")) {
@@ -1704,7 +1722,7 @@ var WebApp = (function() {
 				b1.appendChild(b2);
 				b1.appendChild(i1);
 				o[i].parentNode.insertBefore(b1, o[i]);
-				b1.onclick = function() { FlipCheck(this) };
+				b1.onclick = h;
 				FlipCheck(b1, 1);
 				AddClass(o[i], "__done");
 			}
@@ -1769,7 +1787,7 @@ var WebApp = (function() {
 	}
 
 	function ImagesCheck() {
-		if (_scrAmount - WIN().y == 0) {
+		if (_scrAmount - WIN().y === 0) {
 			_scrID = clearInterval(_scrID);	// no return = disable _scrID
 			ImagesShow();
 		}
