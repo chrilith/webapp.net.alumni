@@ -809,6 +809,7 @@ var WebApp = (function() {
 		if (a != _def)	{ Historize(a); }				// FIXME: should historize extra params too if any (?)
 		if (!a)			{ a = _def; _opener("#"); }
 
+		ImagesShow();	// At startup, for a static layer, "load" set by the developer by hand
 		Layer(a, 1);
 		AddLayerButtons($(a));
 
