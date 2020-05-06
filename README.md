@@ -1,5 +1,5 @@
-WebApp.Net Alumni -- http://webapp-net.com/  
-Copyright (c) 2008-2012, Chris Apers (Chrilith)  
+WebApp.Net Alumni  
+Copyright (c) 2008-2012, Chrilith  
 All rights reserved.  
 
 A web application micro-framework for iPhone and iPod touch, webOS, Android and
@@ -7,13 +7,9 @@ any other WebKit based browser.
 
 WebApp.Net can be used with any server side technology (.NET, PHP, ...).
 
-A full features and changes list is available on the website.
-
 Source   https://github.com/chrilith/webapp.net.alumni
 
-================================================================================
-DISCLAIMER
-================================================================================
+## DISCLAIMER
 
 The following discaimer applies to all the licenses below.
 
@@ -28,10 +24,7 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
-================================================================================
-WIP / BETA SOFTWARE LICENSE
-================================================================================
+## WIP / BETA SOFTWARE LICENSE
 
 Beta Version of WebApp.Net are provided for testing and evaluation purpose only.
 You are not allowed to use Beta Version of WebApp.Net in production services
@@ -41,19 +34,13 @@ subject to changes. You are not allowed to disclose all or part of the provided
 Beta Version without specific prior written permission, regardless of the fact
 this beta version is public or private.
 
-
-================================================================================
-RELEASE CANDIDATE SOFTWARE LICENSE
-================================================================================
+## RELEASE CANDIDATE SOFTWARE LICENSE
 
 The same license as Release Version applies to Release Candidate Version
 including the fact that some tools and/or features exposed in Release Candidate
 Version might changes during the evaluation of this Release Candidate Version.
 
-
-================================================================================
-RELEASE SOFTWARE LICENSE
-================================================================================
+## RELEASE SOFTWARE LICENSE
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
